@@ -95,15 +95,15 @@
             if(absDistanceX > 2 || absDistanceY > 2) {
                 e.preventDefault();
                 move();
-                if(options.isAuto) {
-                    autoPlay = setInterval(function() {
-                        isStart = true;
-                        oldX = parseInt(scroller.css('-webkit-transform').match(/\-?[0-9]+\.?[0-9]*/g)[1]);
-                        oldX = oldX - oldX % w;
-                        distanceX = 100;
-                        move();
-                    }, delay);
-                }
+            }
+            if(options.isAuto) {
+                autoPlay = setInterval(function() {
+                    isStart = true;
+                    oldX = parseInt(scroller.css('-webkit-transform').match(/\-?[0-9]+\.?[0-9]*/g)[1]);
+                    oldX = oldX - oldX % w;
+                    distanceX = 100;
+                    move();
+                }, delay);
             }
             isInit = true;
         });
@@ -150,9 +150,12 @@
                 scroller.animate({
                     '-webkit-transform': 'translate3d(' + x + 'px, 0px, 0px)'
                 }, speed, function() {
+                    if(realLen > 2) {
+                        realIdx = curr;
+                    }
                     em.eq(realIdx).addClass(ON).siblings('.' + ON).removeClass(ON);
-                    realIdx = curr;
                     if(realLen == 2) {
+                        realIdx = curr;
                         var style = item.eq(changeIdx).css('-webkit-transform');
                         item.eq(changeIdx).remove();
                         if(changeIdx == 2) {
